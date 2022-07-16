@@ -7,7 +7,7 @@ function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
     const [edit, setEdit] = useState({
         id: null,
         value: '',
-        completed: false,
+        status: false,
     });
 
     const submitUpdate = value => { 
@@ -15,7 +15,7 @@ function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
         setEdit({
             id: null,
             value: '',
-            completed: false,
+            status: false,
         });
     };
 
@@ -26,7 +26,7 @@ function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
 
     return todos.map((todo, index) => (
         <div
-            className={todo.isComplete ? 'todo-row complete' : 'todo-row'}
+            className={todo.status ? 'todo-row complete' : 'todo-row'}
             key={index}
         >
             <div key={todo.id} onClick={() => completeTodo(todo.id)}>
