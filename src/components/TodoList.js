@@ -6,16 +6,6 @@ import TodoFilter from './TodoFilter';
 const TodoList = (props) => {
     const [todos, setTodos] = useState([]);
     const [filteredStatus, setFilteredStatus] = useState(false);
-
-    useEffect(() => {
-        let arr = localStorage.getItem('todos')
-        
-        if (arr)
-        {
-            let obj = JSON.parse(arr)
-            setTodos(obj)
-        }
-    }, []);
     
     const statusChangeHandler = (status) => {
         if (status === 'all')
@@ -81,6 +71,16 @@ const TodoList = (props) => {
         });
         setTodos(newTodos);
     };
+
+    useEffect(() => {
+        let arr = localStorage.getItem('todos')
+        
+        if (arr)
+        {
+            let obj = JSON.parse(arr)
+            setTodos(obj)
+        }
+    }, []);
 
     return (
         <div>

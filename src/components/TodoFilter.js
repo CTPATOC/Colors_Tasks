@@ -1,7 +1,7 @@
 import React from 'react';
 import './TodoFilter.css';
 
-const TodoFilter = (props, statusChangeHandler) => {
+const TodoFilter = (props, {statusChangeHandler}) => {
 
     return (
         <div className='todos-filter'>
