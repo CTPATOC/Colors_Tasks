@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Todo from './Todo';
 import TodoForm from './TodoForm';
 import TodoFilter from './TodoFilter';
@@ -7,13 +7,30 @@ const TodoList = (props) => {
     const [todos, setTodos] = useState([]);
     const [filteredStatus, setFilteredStatus] = useState(false);
 
+    useEffect(() => {
+        let arr = localStorage.getItem('todos')
+        
+        if (arr)
+        {
+            let obj = JSON.parse(arr)
+            setTodos(obj)
+        }
+    }, []);
+    
     const statusChangeHandler = (status) => {
-        setFilteredStatus(status);
+        if (status === 'all')
+        {
+            setFilteredStatus(todos);
+        } else
+        {
+            let newTodos = [...todos].filter(todo => todo.status === status);
+            setFilteredStatus(newTodos);
+        };
     };
 
-    const filteredTodo = [...todos].filter(todo => {
-        return todo.status === filteredStatus;
-    });
+    // const filteredTodo = [...todos].filter(todo => {
+    //     return todo.status === filteredStatus;
+    // });
 
     // const filteredTodo = (status) => { 
     //     if (status === 'all')
@@ -35,6 +52,7 @@ const TodoList = (props) => {
         const newTodos = [todo, ...todos];
 
         setTodos(newTodos);
+        localStorage.setItem('todos', JSON.stringify(newTodos))
     };
 
     const updateTodo = (todoId, newValue) => { 
@@ -64,14 +82,12 @@ const TodoList = (props) => {
         setTodos(newTodos);
     };
 
-    console.log(todos);
-
     return (
         <div>
             <h1>Які пригоди на сьогодні?</h1>
             <TodoForm onSubmit={addTodo} />
             <TodoFilter status={filteredStatus} onChangeStatus={statusChangeHandler} />
-            <Todo todos={filteredTodo} completeTodo={completeTodo} removeTodo={removeTodo}
+            <Todo todos={todos} completeTodo={completeTodo} removeTodo={removeTodo}
                 updateTodo={updateTodo} />
         </div>
     );
