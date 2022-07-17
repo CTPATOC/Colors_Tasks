@@ -82,7 +82,7 @@ const TodoList = (props) => {
             let obj = JSON.parse(arr)
             setTodos(obj)
         }
-    }, []);
+    }, ['todos']);
 
     return (
         <div>
