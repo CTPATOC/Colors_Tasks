@@ -4,20 +4,14 @@ import TodoForm from './TodoForm';
 import TodoFilter from './TodoFilter';
 
 const TodoList = (props) => {
-    const [todos, setTodos] = useState([]);
-    const [status, setStatus] = useState('all');
-    
-    useEffect(() => {
+    const [todos, setTodos] = useState(() => {
         const temp = localStorage.getItem('todos')
         console.log(temp);
         const loadedTodos = JSON.parse(temp)
-        if (loadedTodos)
-        {
-            setTodos(loadedTodos)
-            console.log(loadedTodos);
-        }
-    }, [])
-
+        return loadedTodos || []
+    })
+    const [status, setStatus] = useState('all');
+    
     useEffect(() => {
         const temp = JSON.stringify(todos)
         localStorage.setItem('todos', temp)
@@ -26,8 +20,6 @@ const TodoList = (props) => {
     const onChangeStatus = (event) => {
         setStatus(event.target.value === 'all' ? 'all' : event.target.value === 'true');
     };
-    console.log(todos);
-    console.log(status);
 
     const filteredTodo = status == 'all' ? todos : todos.filter(todo => todo.status === status)
 
