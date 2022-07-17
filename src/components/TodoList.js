@@ -7,6 +7,21 @@ const TodoList = (props) => {
     const [todos, setTodos] = useState([]);
     const [filteredStatus, setFilteredStatus] = useState(false);
     
+    useEffect(() => {
+        const temp = localStorage.getItem('todos')
+        const loadedTodos = JSON.parse(temp)
+
+        if (loadedTodos)
+        {
+            setTodos(loadedTodos)
+        }
+    }, [])
+
+    useEffect(() => {
+        const temp = JSON.stringify(todos)
+        localStorage.setItem('todos', temp)
+    }, [todos])
+
     const statusChangeHandler = (status) => {
         if (status === 'all')
         {
@@ -18,21 +33,6 @@ const TodoList = (props) => {
         };
     };
 
-    // const filteredTodo = [...todos].filter(todo => {
-    //     return todo.status === filteredStatus;
-    // });
-
-    // const filteredTodo = (status) => { 
-    //     if (status === 'all')
-    //     {
-    //         setFilteredStatus(todos);
-    //     } else
-    //     {
-    //         let newTodos = [...todos].filter(todo => todo.status === status);
-    //         setFilteredStatus(newTodos);
-    //     }
-    // };
-
     const addTodo = (todo) => {
         if (!todo.text || /^\s*$/.test(todo.text))
         {
@@ -42,7 +42,6 @@ const TodoList = (props) => {
         const newTodos = [todo, ...todos];
 
         setTodos(newTodos);
-        localStorage.setItem('todos', JSON.stringify(newTodos))
     };
 
     const updateTodo = (todoId, newValue) => { 
@@ -58,31 +57,19 @@ const TodoList = (props) => {
         const removeArr = [...todos].filter(todo => todo.id !== id)
 
         setTodos(removeArr);
-        localStorage.setItem('todos', JSON.stringify(removeArr))
     };
 
     const completeTodo = id => {
-        let newTodos = [...todos].filter(todo => {
+        let newTodos = [...todos].map((todo) => {
             if (todo.id === id)
             {
-                
                 todo.status = !todo.status
             }
-            return todos;
+            return todo;
         });
         setTodos(newTodos);
-        localStorage.setItem('todos', JSON.stringify(newTodos))
     };
 
-    useEffect(() => {
-        let arr = localStorage.getItem('todos')
-        
-        if (arr)
-        {
-            let obj = JSON.parse(arr)
-            setTodos(obj)
-        }
-    }, ['todos']);
 
     return (
         <div>
