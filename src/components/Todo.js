@@ -3,7 +3,7 @@ import TodoForm from './TodoForm';
 import { GiWoodAxe } from 'react-icons/gi';
 import { RiQuillPenFill } from 'react-icons/ri';
 
-function Todo({ todos, completeTodo, removeTodo, updateTodo }) {
+const Todo = ({ todos, completeTodo, removeTodo, updateTodo }) => {
     const [edit, setEdit] = useState({
         id: null,
         value: '',
