@@ -58,6 +58,7 @@ const TodoList = (props) => {
         const removeArr = [...todos].filter(todo => todo.id !== id)
 
         setTodos(removeArr);
+        localStorage.setItem('todos', JSON.stringify(removeArr))
     };
 
     const completeTodo = id => {
@@ -70,6 +71,7 @@ const TodoList = (props) => {
             return todo;
         });
         setTodos(newTodos);
+        localStorage.setItem('todos', JSON.stringify(newTodos))
     };
 
     useEffect(() => {
