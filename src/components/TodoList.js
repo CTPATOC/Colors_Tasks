@@ -68,7 +68,7 @@ const TodoList = (props) => {
                 
                 todo.status = !todo.status
             }
-            return todo;
+            return todos;
         });
         setTodos(newTodos);
         localStorage.setItem('todos', JSON.stringify(newTodos))
